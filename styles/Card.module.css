@@ -1,0 +1,41 @@
+.card {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 2px,
+    rgba(101, 119, 134, 0.15) 0px 0px 2px 1px;
+  height: fit-content;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.card section,
+.card span {
+  display: flex;
+}
+
+.card section[role="top"] {
+  flex-direction: column;
+  padding: 1rem 1rem 0;
+}
+
+.card section[role="bottom"] {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem 1rem;
+}
+
+.card span[role="meta"] span {
+  margin: 0 8px;
+}
+
+.card span[role="meta"] span:first-child {
+  margin-left: 0;
+}
+
+.card span[role="tags"] {
+  margin: 1rem 0;
+}
+
+.card svg {
+  margin-right: 4px;
+}

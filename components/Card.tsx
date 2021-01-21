@@ -51,10 +51,10 @@ export default function Card({ assignedTo, attachments, description, dueDate, fl
                         <Avatar key={user._id} type='small' user={user} />
                     ))}
                     {assignedTo.length > 2 && (
-                        <div role='avatar-surplus' style={{
-                            fontSize: '10px'
-                        }}>
-                            <p>+{assignedTo.length - 2}</p>
+                        <div role='avatar-surplus'>
+                            <p style={{
+                                fontSize: '10px'
+                            }}>+{assignedTo.length - 2}</p>
                         </div>
                     )}
                 </span>

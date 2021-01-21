@@ -52,11 +52,12 @@ export default function Home() {
               ))}
               {users.readUsers.length > 4 && (
                 <div role='avatar-surplus' style={{
-                  fontSize: '13px',
                   height: '36.5px',
                   width: '36.5px'
                 }}>
-                  <p>+{users.readUsers.length - 4}</p>
+                  <p style={{
+                    fontSize: '13px'
+                  }}>+{users.readUsers.length - 4}</p>
                 </div>
               )}
             </span>}

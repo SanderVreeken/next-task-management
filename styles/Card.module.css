@@ -8,6 +8,15 @@
   width: 100%;
 }
 
+.card p[role="description"] {
+  display: -webkit-box;
+  margin: 0.8rem 0 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 .card section,
 .card span {
   display: flex;
@@ -15,25 +24,24 @@
 
 .card section[role="top"] {
   flex-direction: column;
-  padding: 1rem 1rem 0;
+  padding: 1rem;
 }
 
 .card section[role="bottom"] {
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 1rem 1rem;
+  padding: 1rem;
 }
 
 .card span[role="meta"] span {
+  align-items: center;
+  display: flex;
   margin: 0 8px;
 }
 
 .card span[role="meta"] span:first-child {
   margin-left: 0;
-}
-
-.card span[role="tags"] {
-  margin: 1rem 0;
+  min-width: 30px;
 }
 
 .card svg {

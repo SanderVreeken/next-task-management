@@ -1,3 +1,7 @@
+span[role="avatars"] div {
+  margin: 0 1px;
+}
+
 p,
 h1,
 h2,
@@ -12,6 +16,10 @@ body {
   font-family: Arial, Helvetica, sans-serif, -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
     Helvetica Neue, sans-serif;
+}
+
+p {
+  font-size: 14px;
 }
 
 main {
@@ -34,6 +42,15 @@ header {
   border-width: 0 0 1px;
   display: flex;
   padding: 1rem 3rem;
+}
+
+div[role="avatar-surplus"] {
+  align-items: center;
+  border: 1px solid #e6ecf0;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  padding: 0.3rem;
 }
 
 button {

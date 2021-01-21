@@ -3,3 +3,11 @@
   border-radius: 5px;
   padding: 1rem;
 }
+
+.list span[role="buttons"] button:first-child {
+  margin-right: 4px;
+}
+
+.list button > svg {
+  margin: 0;
+}

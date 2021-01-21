@@ -1,15 +1,18 @@
 import { AiOutlineEllipsis, AiOutlinePlus } from 'react-icons/ai'
 
-import styles from '../styles/List.module.css'
+import TaskT from '../types/Task'
+
 import Button from './Button'
 import Card from './Card'
 import Header from './Header'
+import styles from '../styles/List.module.css'
 
 type Props = {
+    tasks?: TaskT[]
     title: string
 }
 
-export default function List({ title }) {
+export default function List({ tasks, title }) {
     return (
         <div className={styles.list}>
             <Header backgroundColor='transparent' justifyContent='space-between' padding='0'>
@@ -17,7 +20,7 @@ export default function List({ title }) {
                     <span>
                         <h4>{title}</h4>
                     </span>
-                    <span>
+                    <span role='buttons'>
                         <Button backgroundColor='#e6ecf0'>
                             <AiOutlinePlus />
                         </Button>
@@ -28,10 +31,9 @@ export default function List({ title }) {
                 </>
             </Header>
             <section role='body'>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {tasks && tasks.map((task: TaskT) => (
+                    <Card assignedTo={task.assignedTo} attachments={task.attachments} description={task.description} dueDate={task.dueDate} flagged={task.flagged} key={task._id} tags={task.tags} title={task.title} />
+                ))}
             </section>
         </div>
     )

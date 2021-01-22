@@ -7,7 +7,7 @@ import styles from '../styles/NavBar.module.css'
 export default function NavBar() {
     return (
         <div className={styles.navBar}>
-            <SearchBar />
+            <SearchBar type='regular' />
             <span role='buttons'>
                 {NavBarButtons.map((button, index) => (
                     <Button backgroundColor={button.backgroundColor} borderColor={button.borderColor} color={button.color} key={index}>

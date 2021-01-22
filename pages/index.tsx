@@ -10,12 +10,13 @@ import { HeaderButtons } from '../constants/buttons'
 import Avatar from '../components/Avatar'
 import Board from '../components/Board'
 import Button from '../components/Button'
+import Dropdown from '../components/Dropdown'
 import Header from '../components/Header'
 import NavBar from '../components/NavBar'
+import Tag from '../components/Tag'
 import { useStateValue } from '../components/StateProvider'
 import styles from '../styles/Home.module.css'
-import Tag from '../components/Tag'
-import Dropdown from '../components/Dropdown'
+import Cover from '../components/Cover'
 
 export default function Home() {
   const [{ team }] = useStateValue()
@@ -74,9 +75,11 @@ export default function Home() {
       <main>
         <NavBar />
         <Board />
-        {/* Dropdown only here for testing purposes. */}
-        <Dropdown />
+        <Cover>
+          <Dropdown />
+        </Cover>
       </main>
+      
     </div>
   )
 }

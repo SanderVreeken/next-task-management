@@ -1,9 +1,12 @@
 .searchBar {
   align-items: center;
   border: 1px solid #e6ecf0;
-  border-radius: 5px;
   display: flex;
   grid-area: 1/1/2/2;
   height: 36px;
   padding: 0 1rem;
+}
+
+.searchBar input {
+  margin-left: 4px;
 }

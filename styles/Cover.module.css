@@ -1,0 +1,12 @@
+.cover {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px,
+    rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+  height: 100%;
+  left: calc((100vw / 2) - (452px / 2));
+  padding: 2rem;
+  position: absolute;
+  top: 192px;
+  width: 452px;
+}

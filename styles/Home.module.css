@@ -1,3 +1,7 @@
+.home {
+  position: relative;
+}
+
 .home h4[role="title"] {
   margin-right: 6px;
 }

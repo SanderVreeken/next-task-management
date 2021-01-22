@@ -1,7 +1,9 @@
 import moment from 'moment'
 import { AiFillFlag, AiOutlineClockCircle, AiOutlineFlag, AiOutlinePaperClip } from 'react-icons/ai'
+import { useDrag } from 'react-dnd'
 
 import UserT from '../types/User'
+import ItemTypes from '../constants/ItemTypes'
 
 import Line from './Line'
 import Tag from './Tag'
@@ -14,13 +16,26 @@ type Props = {
     description?: string
     dueDate: number
     flagged: boolean
+    id: string
     tags: string[]
     title: string
 }
 
-export default function Card({ assignedTo, attachments, description, dueDate, flagged, tags, title }: Props) {
+export default function Card({ assignedTo, attachments, description, dueDate, flagged, id, tags, title }: Props) {
+    const [{ isDragging }, drag] = useDrag({
+        item: {
+            id: id,
+            type: ItemTypes.CARD
+        },
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    })
+
     return (
-        <div className={styles.card}>
+        <div className={styles.card} ref={drag} style={{
+            opacity: isDragging ? 0.5 : 1
+        }}>
             <section role='top'>
                 <h4>{title}</h4>
                 {description && <p role='description'>{description}</p>}
@@ -47,14 +62,14 @@ export default function Card({ assignedTo, attachments, description, dueDate, fl
                     </span>
                 </span>
                 <span role='avatars'>
-                    {assignedTo.slice(0, 2).map(user => (
+                    {assignedTo.slice(0, 1).map(user => (
                         <Avatar key={user._id} type='small' user={user} />
                     ))}
-                    {assignedTo.length > 2 && (
+                    {assignedTo.length > 1 && (
                         <div role='avatar-surplus'>
                             <p style={{
                                 fontSize: '10px'
-                            }}>+{assignedTo.length - 2}</p>
+                            }}>+{assignedTo.length - 1}</p>
                         </div>
                     )}
                 </span>

@@ -1,4 +1,6 @@
 import useSWR from 'swr'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { listsFetcher } from '../graphql/fetchers/lists'
 import { tasksFetcher } from '../graphql/fetchers/tasks'
@@ -15,13 +17,15 @@ export default function Board() {
     const [{ team }] = useStateValue()
 
     const { data: lists } = useSWR([READ_LISTS_QUERY, team], listsFetcher)
-    const { data: tasks } = useSWR([READ_TASKS_QUERY, team], tasksFetcher)
+    const { data: tasks } = useSWR([READ_TASKS_QUERY, team], tasksFetcher, { refreshInterval: 1000 })
 
     return (
-        <div className={styles.board}>
-            {(lists && tasks) && sortData(lists.readLists, 'order').map(list => (
-                <List key={list._id} tasks={groupObject(tasks.readTasks, 'list')[list.order]} title={list.title} />
-            ))}
-        </div>
+        <DndProvider backend={HTML5Backend}>
+            <div className={styles.board}>
+                {(lists && tasks) && sortData(lists.readLists, 'order').map(list => (
+                    <List key={list._id} list={list.order} tasks={groupObject(tasks.readTasks, 'list')[list.order]} title={list.title} />
+                ))}
+            </div>
+        </DndProvider>
     )
 }

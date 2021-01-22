@@ -1,13 +1,17 @@
 import { ApolloServer, gql } from 'apollo-server-micro'
-import { constants } from 'buffer'
 
 import { connectToDatabase } from '../../utils/mongodb'
 
 type Props = {
+    id: string,
+    list: number,
     team: string
 }
 
 const typeDefs = gql`
+    type Mutation {
+        updateTask(id: String!, list: Int!): [Task]!
+    }
     type Query {
         readTasks(team: String!): [Task]!
     }
@@ -34,6 +38,27 @@ const typeDefs = gql`
 `
 
 const resolvers = {
+    Mutation: {
+        async updateTask(parent: any, { id, list }: Props) {
+            const { db } = await connectToDatabase()
+            
+            try { 
+                const task = await db.collection('tasks').findOne({ _id: id })
+                task.list = list
+
+                await db.collection('tasks').updateOne({ _id: id }, { $set: task })
+
+                task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
+                task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
+                    return await db.collection('users').findOne({ _id: user })
+                }))
+                
+                return task
+            } catch(error) {
+                throw new Error(error)
+            }
+        }
+    },
     Query: {
         async readTasks(_: any, { team }: Props) {
             const { db } = await connectToDatabase()

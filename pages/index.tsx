@@ -15,6 +15,7 @@ import NavBar from '../components/NavBar'
 import { useStateValue } from '../components/StateProvider'
 import styles from '../styles/Home.module.css'
 import Tag from '../components/Tag'
+import Dropdown from '../components/Dropdown'
 
 export default function Home() {
   const [{ team }] = useStateValue()
@@ -73,6 +74,8 @@ export default function Home() {
       <main>
         <NavBar />
         <Board />
+        {/* Dropdown only here for testing purposes. */}
+        <Dropdown />
       </main>
     </div>
   )

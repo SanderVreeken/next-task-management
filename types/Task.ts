@@ -1,3 +1,4 @@
+import TagT from './Tag'
 import UserT from './User'
 
 type TaskT = {
@@ -10,7 +11,7 @@ type TaskT = {
     dueDate: number
     flagged: boolean
     list: number
-    tags: string[]
+    tags: TagT[]
     team: string
     title: string
 }

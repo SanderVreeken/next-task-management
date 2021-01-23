@@ -4,8 +4,10 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { useState } from 'react'
 
 import { listsFetcher } from '../graphql/fetchers/lists'
+import { tagsFetcher } from '../graphql/fetchers/tags'
 import { usersFetcher } from '../graphql/fetchers/users'
 import { READ_LISTS_QUERY } from '../graphql/queries/lists'
+import { READ_TAGS_QUERY } from '../graphql/queries/tags'
 import { READ_USERS_QUERY } from '../graphql/queries/users'
 
 import { HeaderButtons } from '../constants/buttons'
@@ -23,10 +25,11 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
   // State value that handles the visibility of the Cover component.
-  const [cover, setCover] = useState(null)  
+  const [cover, setCover] = useState(true)  
   const [{ team }] = useStateValue()
 
   const { data: lists } = useSWR([READ_LISTS_QUERY, team], listsFetcher)
+  const { data: tags } = useSWR([READ_TAGS_QUERY, team], tagsFetcher)
   const { data: users } = useSWR([READ_USERS_QUERY, team], usersFetcher)
   
   return (
@@ -85,7 +88,7 @@ export default function Home() {
         )}
         {cover && (
           <Cover>
-            {(lists && users) && <TaskForm lists={lists.readLists} users={users.readUsers} />}
+            {(lists && tags && users) && <TaskForm lists={lists.readLists} tags={tags.readTags} users={users.readUsers} />}
           </Cover>
         )}
       </main>

@@ -19,6 +19,7 @@ body {
 textarea {
   border: 1px solid #e6ecf0;
   border-radius: 5px;
+  padding: 0.4rem;
   resize: none;
 }
 

@@ -9,6 +9,7 @@ import Line from './Line'
 import Tag from './Tag'
 import styles from '../styles/Card.module.css'
 import Avatar from './Avatar'
+import TagT from '../types/Tag'
 
 type Props = {
     attachments?: number
@@ -17,7 +18,7 @@ type Props = {
     dueDate: number
     flagged: boolean
     id: string
-    tags: string[]
+    tags: TagT[]
     title: string
 }
 
@@ -43,7 +44,7 @@ export default function Card({ assignedTo, attachments, description, dueDate, fl
                     marginTop: !description && '1rem'
                 }}>
                     {/* TODO: Set the id of the tag to the corresponding id from the database rather than the index. */}
-                    {tags.map((tag, index) => <Tag key={index} title={tag} />)}
+                    {tags.map((tag, index) => <Tag key={index} title={tag.title} />)}
                 </span>
             </section>
             <Line />

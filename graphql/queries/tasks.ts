@@ -20,7 +20,11 @@ export const READ_TASKS_QUERY = /* GraphQL */ `
             dueDate
             flagged
             list
-            tags
+            tags {
+                _id
+                team
+                title
+            }
             team
             title
         }
@@ -49,7 +53,11 @@ export const UPDATE_TASK_QUERY = /* GraphQL */ `
             dueDate
             flagged
             list
-            tags
+            tags {
+                _id
+                team
+                title
+            }
             team
             title
         }

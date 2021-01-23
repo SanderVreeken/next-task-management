@@ -1,26 +1,31 @@
 import { useState } from 'react'
 
-import UserT from '../types/User'
-
 import Dropdown from './Dropdown'
-import NameTag from './NameTag'
+import Selected from './Selected'
 import styles from '../styles/Selector.module.css'
+import users from '../pages/api/users'
 
 type Props = {
-    users: UserT[]
+    options: any[]
+    optionType: 'list' | 'tag' | 'user' 
 }
 
-export default function Selector({ users }: Props) {
+export default function Selector({ options, optionType }: Props) {
     const [selected, setSelected] = useState([])
 
     return (
         <div className={styles.selector}>
             <div role='selected'>
-                {selected && selected.map(user => (
-                    <NameTag user={user} />
+                {selected && selected.map(option => (
+                    <Selected option={option.option} type={option.type} />
                 ))}
             </div>
-            <Dropdown onSelect={(user) => setSelected(selected => [...selected, user])} options={users} optionType='user' type='search' />
+            <Dropdown onSelect={(option) => {
+                setSelected(selected => [...selected, {
+                    option: option,
+                    type: optionType
+                }])
+            }} options={options} optionType={optionType} type='search' />
         </div>
     )
 }

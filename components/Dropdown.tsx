@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { AiOutlineDown } from 'react-icons/ai'
 
 import ListT from '../types/List'
-import UserT from '../types/User'
 
 import Avatar from './Avatar'
 import SearchBar from './SearchBar'
@@ -11,8 +10,8 @@ import styles from '../styles/Dropdown.module.css'
 type Props = {
     onSelect?: (...args: any) => void
     type: 'regular' | 'search'
-    options: any
-    optionType: 'list' | 'user'
+    options: any[]
+    optionType: 'list' | 'tag' | 'user' 
     value?: ListT 
 }
 
@@ -20,10 +19,17 @@ export default function Dropdown({ onSelect, type, options, optionType, value }:
     const [searchText, setSearchText] = useState(null)
     const [isShown, setIsShown] = useState(false)
 
-    const filterUsers = options.filter(user => {
+    const filterOptions = options.filter(option => {
         const regExp = new RegExp(searchText, 'i')
-        return regExp.test(user.firstName)
+        const filterValue = optionType === 'tag' ? option.title : option.firstName
+        return regExp.test(filterValue)
     })
+
+    const selectOption = option => {
+        onSelect(option)
+        setIsShown(false)
+        setSearchText(null)
+    }
 
     const updateTextValue = (value) => {
         value !== '' ? setSearchText(value) : setSearchText(null)
@@ -41,20 +47,17 @@ export default function Dropdown({ onSelect, type, options, optionType, value }:
             ) : (
                 <SearchBar onChange={(event) => updateTextValue(event)} type='dropdown' value={searchText} />
             )}
-            {(type === 'regular' ? isShown : filterUsers.length > 0) && (
+            {(type === 'regular' ? isShown : filterOptions.length > 0) && (
                 <section role='options'>
-                    {(type === 'regular' ? options : filterUsers).map(option => (
-                        <div role='option' onClick={() => {
-                            onSelect(option)
-                            setIsShown(false)
-                            setSearchText(null)
-                        }}>
+                    {(type === 'regular' ? options : filterOptions).map(option => (
+                        <div role='option' onClick={() => selectOption(option)}>
                             <span role='user'>
-                                {optionType === 'list' ? (
+                                {(optionType === 'list' || optionType === 'tag') && (
                                     <span role='titles'>
                                         <h5>{option.title}</h5>
                                     </span>
-                                ) : (
+                                )}
+                                {optionType === 'user' && (
                                     <>
                                         <Avatar type='small' user={option} />
                                         <span role='titles'>

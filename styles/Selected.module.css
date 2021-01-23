@@ -1,4 +1,4 @@
-.nameTag {
+.selected {
   align-items: center;
   border: 1px solid #e6ecf0;
   border-radius: 9999px;
@@ -8,7 +8,6 @@
   min-width: max-content;
 }
 
-.nameTag h5 {
+.selected h5 {
   min-width: fit-content;
-  padding-left: 0.6rem;
 }

@@ -5,7 +5,7 @@ import { updateTask } from '../graphql/fetchers/tasks'
 import { UPDATE_TASK_QUERY } from '../graphql/queries/tasks'
 
 import TaskT from '../types/Task'
-import ItemTypes from '../constants/ItemTypes'
+import ItemTypes from '../constants/itemTypes'
 
 import Button from './Button'
 import Card from './Card'

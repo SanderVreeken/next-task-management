@@ -3,7 +3,7 @@ import { AiFillFlag, AiOutlineClockCircle, AiOutlineFlag, AiOutlinePaperClip } f
 import { useDrag } from 'react-dnd'
 
 import UserT from '../types/User'
-import ItemTypes from '../constants/ItemTypes'
+import ItemTypes from '../constants/itemTypes'
 
 import Line from './Line'
 import Tag from './Tag'

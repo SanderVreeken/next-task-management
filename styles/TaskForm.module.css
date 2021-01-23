@@ -1,0 +1,22 @@
+.taskForm input[role="title"] {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.taskForm label {
+  margin: 10px 0 4px 0;
+}
+
+.taskForm span[role="buttons"] {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.taskForm span[role="buttons"] button:first-child {
+  margin-right: 4px;
+}
+
+.taskForm textarea {
+  height: 72px;
+}

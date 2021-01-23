@@ -2,16 +2,18 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import styles from '../styles/SearchBar.module.css'
 
 type Props = {
+    onChange?: (...args: any) => void
     type: 'dropdown' | 'regular'
+    value?: string
 }
 
-export default function SearchBar({ type }) {
+export default function SearchBar({ onChange, type, value }: Props) {
     return (
         <div className={styles.searchBar} style={{
-            borderRadius: type === 'dropdown' ? '5px 5px 0 0' : '5px'
+            borderRadius: type === 'dropdown' ? '0' : '5px'
         }}>
             <AiOutlineSearch />
-            <input placeholder='Search Items'></input>
+            <input onChange={(event) => onChange(event.target.value)} placeholder='Search Items' value={value}></input>
         </div>
     )
 }

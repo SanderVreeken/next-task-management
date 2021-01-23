@@ -1,0 +1,14 @@
+.nameTag {
+  align-items: center;
+  border: 1px solid #e6ecf0;
+  border-radius: 9999px;
+  display: flex;
+  flex-direction: row;
+  padding: 0.3rem 0.6rem 0.3rem 0.5rem;
+  min-width: max-content;
+}
+
+.nameTag h5 {
+  min-width: fit-content;
+  padding-left: 0.6rem;
+}

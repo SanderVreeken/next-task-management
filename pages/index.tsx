@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import useSWR from 'swr'
 import { AiOutlinePlus } from 'react-icons/ai'
+import { useState } from 'react'
 
+import { listsFetcher } from '../graphql/fetchers/lists'
 import { usersFetcher } from '../graphql/fetchers/users'
+import { READ_LISTS_QUERY } from '../graphql/queries/lists'
 import { READ_USERS_QUERY } from '../graphql/queries/users'
 
 import { HeaderButtons } from '../constants/buttons'
@@ -10,17 +13,20 @@ import { HeaderButtons } from '../constants/buttons'
 import Avatar from '../components/Avatar'
 import Board from '../components/Board'
 import Button from '../components/Button'
-import Dropdown from '../components/Dropdown'
+import Cover from '../components/Cover'
 import Header from '../components/Header'
 import NavBar from '../components/NavBar'
 import Tag from '../components/Tag'
+import TaskForm from '../forms/TaskForm'
 import { useStateValue } from '../components/StateProvider'
 import styles from '../styles/Home.module.css'
-import Cover from '../components/Cover'
 
 export default function Home() {
+  // State value that handles the visibility of the Cover component.
+  const [cover, setCover] = useState(null)  
   const [{ team }] = useStateValue()
 
+  const { data: lists } = useSWR([READ_LISTS_QUERY, team], listsFetcher)
   const { data: users } = useSWR([READ_USERS_QUERY, team], usersFetcher)
   
   return (
@@ -74,12 +80,15 @@ export default function Home() {
       </Header>
       <main>
         <NavBar />
-        <Board />
-        <Cover>
-          <Dropdown />
-        </Cover>
+        {lists && (
+          <Board lists={lists.readLists} />
+        )}
+        {cover && (
+          <Cover>
+            {(lists && users) && <TaskForm lists={lists.readLists} users={users.readUsers} />}
+          </Cover>
+        )}
       </main>
-      
     </div>
   )
 }

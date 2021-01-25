@@ -3,14 +3,14 @@ import { useState } from 'react'
 import Dropdown from './Dropdown'
 import Selected from './Selected'
 import styles from '../styles/Selector.module.css'
-import users from '../pages/api/users'
 
 type Props = {
+    onSelect?: (...args: any) => void
     options: any[]
     optionType: 'list' | 'tag' | 'user' 
 }
 
-export default function Selector({ options, optionType }: Props) {
+export default function Selector({ onSelect, options, optionType }: Props) {
     const [selected, setSelected] = useState([])
 
     return (
@@ -21,6 +21,7 @@ export default function Selector({ options, optionType }: Props) {
                 ))}
             </div>
             <Dropdown onSelect={(option) => {
+                onSelect(option)
                 setSelected(selected => [...selected, {
                     option: option,
                     type: optionType

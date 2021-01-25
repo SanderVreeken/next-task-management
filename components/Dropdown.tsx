@@ -12,7 +12,7 @@ type Props = {
     type: 'regular' | 'search'
     options: any[]
     optionType: 'list' | 'tag' | 'user' 
-    value?: ListT 
+    value?: any 
 }
 
 export default function Dropdown({ onSelect, type, options, optionType, value }: Props) {

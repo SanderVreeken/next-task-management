@@ -17,7 +17,14 @@ type Props = {
 }
 
 export default function TaskForm({ lists, tags, users }: Props) {
-    const [task, setTask] = useState({})
+    const [task, setTask] = useState({
+        assignedTo: [],
+        description: '',
+        dueDate: '',
+        list: undefined,
+        tags: [],
+        title: '',
+    })
 
     const updateTask = (key, value) => {
         setTask({
@@ -28,20 +35,20 @@ export default function TaskForm({ lists, tags, users }: Props) {
 
     return (
         <form className={styles.taskForm}>
-            <input onChange={(event) => updateTask('title', event.target.value)} placeholder='Enter title' role='title'></input>
+            <input onChange={(event) => updateTask('title', event.target.value)} placeholder='Enter title' role='title' />
             <label>Due date</label>
-            <input onChange={(event) => updateTask('dueDate', new Date(event.target.value).valueOf())} placeholder='dd-mm-yyyy' type='date'></input>
+            <input onChange={(event) => updateTask('dueDate', new Date(event.target.value).valueOf())} placeholder='dd-mm-yyyy' type='date' />
             <label>Description</label>
             <textarea onChange={(event) => updateTask('description', event.target.value)}></textarea>
             <label>Assigned to</label>
-            <Selector options={users} optionType='user' />
+            <Selector onSelect={(option) => console.log(option)} options={users} optionType='user' />
             <label>List</label>
-            {/* <Dropdown onSelect={(list) => updateTask('list', list)} options={lists} optionType='list' type='regular' value={task.list} />
-            <label>Tags</label> */}
+            <Dropdown onSelect={(list) => updateTask('list', list)} options={lists} optionType='list' type='regular' value={task.list} />
+            <label>Tags</label>
             <Selector options={tags} optionType='tag' />
             <span role='buttons'>
-            {TaskFormButtons.map(button => (
-                <Button backgroundColor={button.backgroundColor} borderColor={button.borderColor} color={button.color} onClick={(event) => {
+            {TaskFormButtons.map((button, index) => (
+                <Button backgroundColor={button.backgroundColor} borderColor={button.borderColor} color={button.color} key={index} onClick={(event) => {
                     event.preventDefault()
                     console.log(task)
                 }}>

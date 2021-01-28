@@ -4,7 +4,7 @@ import styles from '../styles/SearchBar.module.css'
 type Props = {
     onChange?: (...args: any) => void
     type: 'dropdown' | 'regular'
-    value: string
+    value?: string
 }
 
 export default function SearchBar({ onChange, type, value }: Props) {

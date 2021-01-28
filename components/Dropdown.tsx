@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { AiOutlineDown } from 'react-icons/ai'
 
-import ListT from '../types/List'
-
 import Avatar from './Avatar'
 import SearchBar from './SearchBar'
 import styles from '../styles/Dropdown.module.css'
@@ -16,23 +14,23 @@ type Props = {
 }
 
 export default function Dropdown({ onSelect, type, options, optionType, value }: Props) {
-    const [searchText, setSearchText] = useState(null)
+    const [searchText, setSearchText] = useState('')
     const [isShown, setIsShown] = useState(false)
 
     const filterOptions = options.filter(option => {
-        const regExp = new RegExp(searchText, 'i')
-        const filterValue = optionType === 'tag' ? option.title : option.firstName
-        return regExp.test(filterValue)
+        if (searchText === '') {
+            return null
+        } else {
+            const regExp = new RegExp(searchText, 'i')
+            const filterValue = optionType === 'tag' ? option.title : option.firstName
+            return regExp.test(filterValue)
+        }
     })
 
     const selectOption = option => {
         onSelect(option)
         setIsShown(false)
-        setSearchText(null)
-    }
-
-    const updateTextValue = (value) => {
-        value !== '' ? setSearchText(value) : setSearchText(null)
+        setSearchText('')
     }
 
     return (
@@ -45,12 +43,12 @@ export default function Dropdown({ onSelect, type, options, optionType, value }:
                     </>
                 </div>
             ) : (
-                <SearchBar onChange={(event) => updateTextValue(event)} type='dropdown' value={searchText} />
+                <SearchBar onChange={(event) => setSearchText(event)} type='dropdown' value={searchText} />
             )}
-            {(type === 'regular' ? isShown : filterOptions.length > 0) && (
+            {(type === 'regular' ? isShown : filterOptions.length >= 1) && (
                 <section role='options'>
                     {(type === 'regular' ? options : filterOptions).map(option => (
-                        <div role='option' onClick={() => selectOption(option)}>
+                        <div key={option._id} role='option' onClick={() => selectOption(option)}>
                             <span role='user'>
                                 {(optionType === 'list' || optionType === 'tag') && (
                                     <span role='titles'>

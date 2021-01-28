@@ -1,6 +1,3 @@
-import TagT from '../types/Tag'
-import UserT from '../types/User'
-
 import Avatar from './Avatar'
 import styles from '../styles/Selected.module.css'
 

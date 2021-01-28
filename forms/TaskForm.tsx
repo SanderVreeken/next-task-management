@@ -19,11 +19,8 @@ type Props = {
 export default function TaskForm({ lists, tags, users }: Props) {
     const [task, setTask] = useState({
         assignedTo: [],
-        description: '',
-        dueDate: '',
         list: undefined,
         tags: [],
-        title: '',
     })
 
     const updateTask = (key, value) => {
@@ -45,7 +42,7 @@ export default function TaskForm({ lists, tags, users }: Props) {
             <label>List</label>
             <Dropdown onSelect={(list) => updateTask('list', list)} options={lists} optionType='list' type='regular' value={task.list} />
             <label>Tags</label>
-            <Selector options={tags} optionType='tag' />
+            <Selector onSelect={(option) => console.log(option)} options={tags} optionType='tag' />
             <span role='buttons'>
             {TaskFormButtons.map((button, index) => (
                 <Button backgroundColor={button.backgroundColor} borderColor={button.borderColor} color={button.color} key={index} onClick={(event) => {

@@ -16,8 +16,8 @@ export default function Selector({ onSelect, options, optionType }: Props) {
     return (
         <div className={styles.selector}>
             <div role='selected'>
-                {selected && selected.map(option => (
-                    <Selected option={option.option} type={option.type} />
+                {selected && selected.map((option, index) => (
+                    <Selected key={index} option={option.option} type={option.type} />
                 ))}
             </div>
             <Dropdown onSelect={(option) => {

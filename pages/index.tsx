@@ -24,9 +24,7 @@ import { useStateValue } from '../components/StateProvider'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  // State value that handles the visibility of the Cover component.
-  const [cover, setCover] = useState(true)  
-  const [{ team }] = useStateValue()
+  const [{ cover, team }] = useStateValue()
 
   const { data: lists } = useSWR([READ_LISTS_QUERY, team], listsFetcher)
   const { data: tags } = useSWR([READ_TAGS_QUERY, team], tagsFetcher)

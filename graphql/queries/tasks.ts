@@ -1,3 +1,36 @@
+export const CREATE_TASK_QUERY = /* GraphQL */ `
+    mutation($assignedTo: [String], $description: String, $dueDate: Float!, $list: Int!, $tags: [String], $team: String!, $title: String!, $user: String!) {
+        createTask(assignedTo: $assignedTo, description: $description, dueDate: $dueDate, list: $list, tags: $tags, team: $team, title: $title, user: $user) {
+            _id
+            assignedTo {
+                _id
+                firstName
+                lastName
+                team
+            }   
+            attachments
+            createdAt
+            createdBy {
+                _id
+                firstName
+                lastName
+                team
+            }
+            description
+            dueDate
+            flagged
+            list
+            tags {
+                _id
+                team
+                title
+            }
+            team
+            title
+        }
+    }
+`
+
 export const READ_TASKS_QUERY = /* GraphQL */ `
     query($team: String!) {
         readTasks(team: $team) {

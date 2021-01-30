@@ -2,14 +2,15 @@ import moment from 'moment'
 import { AiFillFlag, AiOutlineClockCircle, AiOutlineFlag, AiOutlinePaperClip } from 'react-icons/ai'
 import { useDrag } from 'react-dnd'
 
+import TagT from '../types/Tag'
 import UserT from '../types/User'
 import ItemTypes from '../constants/itemTypes'
 
+import Avatar from './Avatar'
 import Line from './Line'
 import Tag from './Tag'
+import { useStateValue } from '../components/StateProvider'
 import styles from '../styles/Card.module.css'
-import Avatar from './Avatar'
-import TagT from '../types/Tag'
 
 type Props = {
     attachments?: number
@@ -32,9 +33,19 @@ export default function Card({ assignedTo, attachments, description, dueDate, fl
             isDragging: !!monitor.isDragging(),
         }),
     })
+    const [, dispatch] = useStateValue()
 
     return (
-        <div className={styles.card} ref={drag} style={{
+        <div className={styles.card} onDoubleClick={() => {
+            dispatch({
+                type: 'UPDATE_COVER',
+                item: true
+            })
+            dispatch({
+                type: 'UPDATE_TASK',
+                item: id
+            })
+        }} ref={drag} style={{
             opacity: isDragging ? 0.5 : 1
         }}>
             <section role='top'>

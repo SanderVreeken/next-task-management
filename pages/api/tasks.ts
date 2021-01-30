@@ -3,17 +3,30 @@ import { ApolloServer, gql } from 'apollo-server-micro'
 import { connectToDatabase } from '../../utils/mongodb'
 
 type Props = {
-    id: string,
-    list: number,
+    id: string
+    assignedTo: string[]
+    description: string
+    dueDate: number
+    list: number
+    tags: string[]
     team: string
+    title: string
+    user: string
 }
 
 const typeDefs = gql`
     type Mutation {
-        updateTask(id: String!, list: Int!): [Task]!
+        createTask(assignedTo: [String], description: String, dueDate: Float!, list: Int!, tags: [String], team: String!, title: String!, user: String!): Task!
+        updateTask(id: String!, list: Int!): Task!
     }
     type Query {
         readTasks(team: String!): [Task]!
+    }
+    type List {
+        _id: ID
+        order: Int
+        team: String
+        title: String
     }
     type Task {
         _id: ID
@@ -44,6 +57,38 @@ const typeDefs = gql`
 
 const resolvers = {
     Mutation: {
+        async createTask(parent: any, { assignedTo, description, dueDate, list, tags, team, title, user }: Props) {
+            const { db } = await connectToDatabase()
+            
+            try { 
+                const task = {
+                    assignedTo: assignedTo,
+                    createdAt: new Date().valueOf(),
+                    createdBy: user,
+                    description: description,
+                    dueDate: dueDate,
+                    flagged: false,
+                    list: list,
+                    tags: tags,
+                    team: team,
+                    title: title,
+                }
+
+                await db.collection('tasks').insertOne(task)
+                
+                task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
+                    return await db.collection('users').findOne({ _id: user })
+                }))
+                task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
+                task.tags = await Promise.all(task.tags.map(async tag => {
+                    return await db.collection('tags').findOne({ _id: tag })
+                }))
+
+                return task
+            } catch(error) {
+                throw new Error(error)
+            }
+        },
         async updateTask(parent: any, { id, list }: Props) {
             const { db } = await connectToDatabase()
             
@@ -81,6 +126,7 @@ const resolvers = {
                 task.tags = await Promise.all(task.tags.map(async tag => {
                     return await db.collection('tags').findOne({ _id: tag })
                 }))
+
                 return task
             })
         }

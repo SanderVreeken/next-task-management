@@ -31,6 +31,40 @@ export const CREATE_TASK_QUERY = /* GraphQL */ `
     }
 `
 
+export const READ_TASK_QUERY = /* GraphQL */ `
+    query($id: String!) {
+        readTask(id: $id) {
+            _id
+            assignedTo {
+                _id
+                firstName
+                lastName
+                team
+            }   
+            attachments
+            createdAt
+            createdBy {
+                _id
+                firstName
+                lastName
+                team
+            }
+            description
+            dueDate
+            flagged
+            list
+            tags {
+                _id
+                team
+                title
+            }
+            team
+            title
+        }
+    }
+`
+
+
 export const READ_TASKS_QUERY = /* GraphQL */ `
     query($team: String!) {
         readTasks(team: $team) {

@@ -5,28 +5,21 @@ import Selected from './Selected'
 import styles from '../styles/Selector.module.css'
 
 type Props = {
+    current?: any[]
     onSelect?: (...args: any) => void
     options: any[]
-    optionType: 'list' | 'tag' | 'user' 
+    optionType: 'tag' | 'user' 
 }
 
-export default function Selector({ onSelect, options, optionType }: Props) {
-    const [selected, setSelected] = useState([])
-
+export default function Selector({ current, onSelect, options, optionType }: Props) {
     return (
         <div className={styles.selector}>
             <div role='selected'>
-                {selected && selected.map((option, index) => (
-                    <Selected key={index} option={option.option} type={option.type} />
+                {current && current.map((option, index) => (
+                    <Selected key={index} option={option} type={optionType} />
                 ))}
             </div>
-            <Dropdown onSelect={(option) => {
-                onSelect(option)
-                setSelected(selected => [...selected, {
-                    option: option,
-                    type: optionType
-                }])
-            }} options={options} optionType={optionType} type='search' />
+            <Dropdown onSelect={onSelect} options={options} optionType={optionType} type='search' />
         </div>
     )
 }

@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import useSWR from 'swr'
 import { AiOutlinePlus } from 'react-icons/ai'
-import { useState } from 'react'
 
 import { listsFetcher } from '../graphql/fetchers/lists'
 import { tagsFetcher } from '../graphql/fetchers/tags'
@@ -22,6 +21,7 @@ import Tag from '../components/Tag'
 import TaskForm from '../forms/TaskForm'
 import { useStateValue } from '../components/StateProvider'
 import styles from '../styles/Home.module.css'
+import { sortData } from '../utils/helpers'
 
 export default function Home() {
   const [{ cover, team }] = useStateValue()
@@ -86,7 +86,7 @@ export default function Home() {
         )}
         {cover && (
           <Cover>
-            {(lists && tags && users) && <TaskForm lists={lists.readLists} tags={tags.readTags} users={users.readUsers} />}
+            {(lists && tags && users) && <TaskForm lists={sortData(lists.readLists, 'order')} tags={tags.readTags} users={users.readUsers} />}
           </Cover>
         )}
       </main>

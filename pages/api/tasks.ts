@@ -20,6 +20,7 @@ const typeDefs = gql`
         updateTask(id: String!, list: Int!): Task!
     }
     type Query {
+        readTask(id: String!): Task!
         readTasks(team: String!): [Task]!
     }
     type List {
@@ -57,7 +58,7 @@ const typeDefs = gql`
 
 const resolvers = {
     Mutation: {
-        async createTask(parent: any, { assignedTo, description, dueDate, list, tags, team, title, user }: Props) {
+        async createTask(_: any, { assignedTo, description, dueDate, list, tags, team, title, user }: Props) {
             const { db } = await connectToDatabase()
             
             try { 
@@ -89,7 +90,7 @@ const resolvers = {
                 throw new Error(error)
             }
         },
-        async updateTask(parent: any, { id, list }: Props) {
+        async updateTask(_: any, { id, list }: Props) {
             const { db } = await connectToDatabase()
             
             try { 
@@ -113,6 +114,21 @@ const resolvers = {
         }
     },
     Query: {
+        async readTask(_: any, { id }: Props) {
+            const { db } = await connectToDatabase()
+
+            const task = await db.collection('tasks').findOne({ _id: id })
+
+            task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
+                return await db.collection('users').findOne({ _id: user })
+            }))
+            task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
+            task.tags = await Promise.all(task.tags.map(async tag => {
+                return await db.collection('tags').findOne({ _id: tag })
+            }))
+
+            return task
+        },
         async readTasks(_: any, { team }: Props) {
             const { db } = await connectToDatabase()
 
@@ -129,7 +145,7 @@ const resolvers = {
 
                 return task
             })
-        }
+        },
     }
 }
 

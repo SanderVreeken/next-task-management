@@ -23,12 +23,12 @@ const typeDefs = gql`
         readTask(id: String!): Task!
         readTasks(team: String!): [Task]!
     }
-    type List {
-        _id: ID
-        order: Int
-        team: String
-        title: String
-    }
+    # type List {
+    #     _id: ID
+    #     order: Int
+    #     team: String
+    #     title: String
+    # }
     type Task {
         _id: ID
         assignedTo: [User]
@@ -37,6 +37,7 @@ const typeDefs = gql`
         createdBy: User
         description: String
         dueDate: Float
+        # TODO: Change the return value of list to an object of type List.
         list: Int
         tags: [Tag]
         team: String

@@ -1,5 +1,5 @@
-const itemTypes = {
+const ItemTypes = {
     CARD: 'card'
 }
 
-export default itemTypes
+export default ItemTypes

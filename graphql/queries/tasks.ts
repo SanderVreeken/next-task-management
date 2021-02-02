@@ -99,8 +99,8 @@ export const READ_TASKS_QUERY = /* GraphQL */ `
 `
 
 export const UPDATE_TASK_QUERY = /* GraphQL */ `
-    mutation($id: String!, $list: Int!) {
-        updateTask(id: $id, list: $list) {
+    mutation($id: String!, $assignedTo: [String], $attachments: Int, $createdAt: Float!, $createdBy: String!, $description: String, $dueDate: Float!, $flagged: Boolean!, $list: Int!, $tags: [String], $team: String!, $title: String!) {
+        updateTask(id: $id, assignedTo: $assignedTo, attachments: $attachments, createdAt: $createdAt, createdBy: $createdBy, description: $description, dueDate: $dueDate, flagged: $flagged, list: $list, tags: $tags, team: $team, title: $title) {
             _id
             assignedTo {
                 _id

@@ -5,8 +5,12 @@ import { connectToDatabase } from '../../utils/mongodb'
 type Props = {
     id: string
     assignedTo: string[]
+    attachments?: number
+    createdAt: number
+    createdBy: string
     description: string
     dueDate: number
+    flagged: boolean
     list: number
     tags: string[]
     team: string
@@ -17,7 +21,7 @@ type Props = {
 const typeDefs = gql`
     type Mutation {
         createTask(assignedTo: [String], description: String, dueDate: Float!, list: Int!, tags: [String], team: String!, title: String!, user: String!): Task!
-        updateTask(id: String!, list: Int!): Task!
+        updateTask(id: String!, assignedTo: [String], attachments: Int, createdAt: Float!, createdBy: String!, description: String, dueDate: Float!, flagged: Boolean!, list: Int!, tags: [String], team: String!, title: String!): Task!
     }
     type Query {
         readTask(id: String!): Task!
@@ -91,12 +95,23 @@ const resolvers = {
                 throw new Error(error)
             }
         },
-        async updateTask(_: any, { id, list }: Props) {
+        async updateTask(_: any, { id, assignedTo, attachments, createdAt, createdBy, description, dueDate, flagged, list, tags, team, title }: Props) {
             const { db } = await connectToDatabase()
             
             try { 
                 const task = await db.collection('tasks').findOne({ _id: id })
+        
+                task.assignedTo = assignedTo
+                task.attachments = attachments
+                task.createdAt = createdAt
+                task.createdBy = createdBy
+                task.description = description
+                task.dueDate = dueDate
+                task.flagged = flagged
                 task.list = list
+                task.tags = tags
+                task.team = team
+                task.title = title
 
                 await db.collection('tasks').updateOne({ _id: id }, { $set: task })
 

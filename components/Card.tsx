@@ -15,18 +15,35 @@ import styles from '../styles/Card.module.css'
 type Props = {
     attachments?: number
     assignedTo: UserT[]
+    createdAt: number
+    createdBy: UserT
     description?: string
     dueDate: number
     flagged: boolean
+    list: number,
     id: string
     tags: TagT[]
+    team: string
     title: string
 }
 
-export default function Card({ assignedTo, attachments, description, dueDate, flagged, id, tags, title }: Props) {
+export default function Card({ assignedTo, attachments, createdAt, createdBy, description, dueDate, flagged, list, id, tags, team, title }: Props) {
     const [{ isDragging }, drag] = useDrag({
         item: {
-            id: id,
+            task: {
+                assignedTo,
+                attachments,
+                createdAt,
+                createdBy,
+                description,
+                dueDate,
+                flagged,
+                id,
+                list,
+                tags,
+                team,
+                title
+            },
             type: ItemTypes.CARD
         },
         collect: monitor => ({

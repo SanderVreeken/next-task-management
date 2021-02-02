@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd'
 
 import TagT from '../types/Tag'
 import UserT from '../types/User'
-import ItemTypes from '../constants/itemTypes'
+import ItemTypes from '../constants/ItemTypes'
 
 import Avatar from './Avatar'
 import Line from './Line'

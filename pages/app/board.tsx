@@ -1,33 +1,38 @@
 import Head from 'next/head'
 import useSWR from 'swr'
 import { AiOutlinePlus } from 'react-icons/ai'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import { listsFetcher } from '../graphql/fetchers/lists'
-import { tagsFetcher } from '../graphql/fetchers/tags'
-import { usersFetcher } from '../graphql/fetchers/users'
-import { READ_LISTS_QUERY } from '../graphql/queries/lists'
-import { READ_TAGS_QUERY } from '../graphql/queries/tags'
-import { READ_USERS_QUERY } from '../graphql/queries/users'
+import { listsFetcher } from '../../graphql/fetchers/lists'
+import { tagsFetcher } from '../../graphql/fetchers/tags'
+import { tasksFetcher } from '../../graphql/fetchers/tasks'
+import { usersFetcher } from '../../graphql/fetchers/users'
+import { READ_LISTS_QUERY } from '../../graphql/queries/lists'
+import { READ_TAGS_QUERY } from '../../graphql/queries/tags'
+import { READ_TASKS_QUERY } from '../../graphql/queries/tasks'
+import { READ_USERS_QUERY } from '../../graphql/queries/users'
 
-import { HeaderButtons } from '../constants/buttons'
+import { HeaderButtons } from '../../constants/buttons'
+import { groupObject, sortData } from '../../utils/helpers'
 
-import Avatar from '../components/Avatar'
-import Board from '../components/Board'
-import Button from '../components/Button'
-import Cover from '../components/Cover'
-import Header from '../components/Header'
-import NavBar from '../components/NavBar'
-import Tag from '../components/Tag'
-import TaskForm from '../forms/TaskForm'
-import { useStateValue } from '../components/StateProvider'
-import styles from '../styles/Home.module.css'
-import { sortData } from '../utils/helpers'
+import Avatar from '../../components/Avatar'
+import Button from '../../components/Button'
+import Cover from '../../components/Cover'
+import Header from '../../components/Header'
+import List from '../../components/List'
+import NavBar from '../../components/NavBar'
+import Tag from '../../components/Tag'
+import TaskForm from '../../forms/TaskForm'
+import { useStateValue } from '../../components/StateProvider'
+import styles from '../../styles/Home.module.css'
 
 export default function Home() {
   const [{ cover, team }] = useStateValue()
 
   const { data: lists } = useSWR([READ_LISTS_QUERY, team], listsFetcher)
   const { data: tags } = useSWR([READ_TAGS_QUERY, team], tagsFetcher)
+  const { data: tasks } = useSWR([READ_TASKS_QUERY, team], tasksFetcher, { refreshInterval: 1000 })
   const { data: users } = useSWR([READ_USERS_QUERY, team], usersFetcher)
   
   return (
@@ -82,7 +87,15 @@ export default function Home() {
       <main>
         <NavBar />
         {lists && (
-          <Board lists={lists.readLists} />
+          <>
+            <DndProvider backend={HTML5Backend}>
+              <div role='board'>
+                  {tasks && sortData(lists.readLists, 'order').map(list => (
+                      <List key={list._id} list={list.order} tasks={groupObject(tasks.readTasks, 'list')[list.order]} title={list.title} />
+                  ))}
+              </div>
+            </DndProvider>
+          </>
         )}
         {cover && (
           <Cover>

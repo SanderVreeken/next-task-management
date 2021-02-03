@@ -12,4 +12,10 @@
   min-height: 50px;
   overflow: scroll;
   padding: 0.35rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.selector div[role="selected"]:-webkit-scrollbar {
+  display: none;
 }

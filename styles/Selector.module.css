@@ -16,6 +16,6 @@
   -ms-overflow-style: none;
 }
 
-.selector div[role="selected"]:-webkit-scrollbar {
+.selector div[role="selected"]::-webkit-scrollbar {
   display: none;
 }

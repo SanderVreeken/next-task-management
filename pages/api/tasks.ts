@@ -1,4 +1,5 @@
 import { ApolloServer, gql } from 'apollo-server-micro'
+import { ObjectID } from 'mongodb'
 
 import { connectToDatabase } from '../../utils/mongodb'
 
@@ -99,7 +100,7 @@ const resolvers = {
             const { db } = await connectToDatabase()
             
             try { 
-                const task = await db.collection('tasks').findOne({ _id: id })
+                const task = await db.collection('tasks').findOne({ _id: ObjectID(id) })
         
                 task.assignedTo = assignedTo
                 task.attachments = attachments
@@ -113,7 +114,7 @@ const resolvers = {
                 task.team = team
                 task.title = title
 
-                await db.collection('tasks').updateOne({ _id: id }, { $set: task })
+                await db.collection('tasks').updateOne({ _id: ObjectID(id) }, { $set: task })
 
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
                     return await db.collection('users').findOne({ _id: user })
@@ -133,7 +134,7 @@ const resolvers = {
         async readTask(_: any, { id }: Props) {
             const { db } = await connectToDatabase()
 
-            const task = await db.collection('tasks').findOne({ _id: id })
+            const task = await db.collection('tasks').findOne({ _id: ObjectID(id) })
 
             task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
                 return await db.collection('users').findOne({ _id: user })

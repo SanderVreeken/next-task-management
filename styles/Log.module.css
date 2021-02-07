@@ -1,0 +1,23 @@
+.log {
+  align-items: center;
+  border-bottom: 1px solid #e6ecf0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem 0.2rem;
+}
+
+.log h5[role="date"] {
+  min-width: 114px;
+  text-align: right;
+}
+
+.log p[role="text"] {
+  text-align: left;
+  padding: 0 1rem;
+}
+
+.log > span {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}

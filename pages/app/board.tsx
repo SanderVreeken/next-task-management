@@ -16,6 +16,7 @@ import { READ_USERS_QUERY } from '../../graphql/queries/users'
 import { HeaderButtons } from '../../constants/buttons'
 import { groupObject, sortData } from '../../utils/helpers'
 
+import Anchor from '../../components/Anchor'
 import Avatar from '../../components/Avatar'
 import Button from '../../components/Button'
 import Cover from '../../components/Cover'
@@ -38,18 +39,20 @@ export default function Home() {
   return (
     <div className={styles.home}>
       <Head>
-        <title>Task Management</title>
+        <title>Task Management | Board</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header backgroundColor='#0d6efd' justifyContent='center'>
         <span>
           {HeaderButtons.map((button, index) => (
-            <Button backgroundColor='transparent' color='white' key={index}>
-              <>
-                {button.icon}
-                <h3>{button.title}</h3>
-              </>
-            </Button>
+            <Anchor href={button.href}>
+              <Button backgroundColor='transparent' color='white' key={index}>
+                <>
+                  {button.icon}
+                  <h3>{button.title}</h3>
+                </>
+              </Button>
+            </Anchor>
           ))}
         </span>
       </Header>

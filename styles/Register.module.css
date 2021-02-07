@@ -1,0 +1,16 @@
+.register {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.register h1 {
+  margin: 1rem 0;
+}
+
+.register svg {
+  height: 4rem;
+  margin-top: 2rem;
+  width: 4rem;
+}

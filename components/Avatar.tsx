@@ -39,7 +39,7 @@ export default function Avatar({ type, user }: Props) {
     return (
         <div className={styles.avatar} style={{
             height: determineSizes(type).height,
-            width: determineSizes(type).height,
+            minWidth: determineSizes(type).height,
         }}>
             <p style={{
                 fontSize: determineSizes(type).fontSize,

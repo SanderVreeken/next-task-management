@@ -4,10 +4,14 @@
   padding: 1rem;
 }
 
-.list span[role="buttons"] button:first-child {
-  margin-right: 4px;
-}
-
 .list button > svg {
   margin: 0;
+}
+
+.list header {
+  min-height: fit-content;
+}
+
+.list span[role="buttons"] button:first-child {
+  margin-right: 4px;
 }

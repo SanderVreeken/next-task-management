@@ -10,6 +10,10 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-.home h4[role="title"] {
-  margin-right: 6px;
+.home main {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr fit-content;
+  padding: 2rem 3rem 0;
 }

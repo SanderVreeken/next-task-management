@@ -1,17 +1,21 @@
-import { AiFillAppstore, AiFillSignal, AiOutlineBook, AiOutlineDown, AiOutlineFilter, AiOutlineInbox, AiOutlinePlus } from 'react-icons/ai'
+import { AiFillAppstore, AiOutlineControl, AiOutlineDashboard, AiOutlineDotChart, AiOutlineDown, AiOutlineFilter, AiOutlinePlus } from 'react-icons/ai'
 
 export const HeaderButtons = [{
-    icon: <AiOutlineInbox />,
-    title: 'Backlog'
-}, {
+    href: '/app/board',
     icon: <AiFillAppstore />,
     title: 'Board'
 }, {
-    icon: <AiOutlineBook />,
+    href: '/app/feed',
+    icon: <AiOutlineDashboard />,
     title: 'Feed'
 }, {
-    icon: <AiFillSignal />,
+    href: '/app/report',
+    icon: <AiOutlineDotChart />,
     title: 'Report'
+}, {
+    href: '/app/settings',
+    icon: <AiOutlineControl />,
+    title: 'Settings'
 }]
 
 export const NavBarButtons = [{

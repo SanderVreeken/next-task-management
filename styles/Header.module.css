@@ -1,3 +1,11 @@
+.header {
+  min-height: var(--min-header-height);
+}
+
+.header h4[role="title"] {
+  margin-right: 6px;
+}
+
 .header section,
 .header span {
   align-items: center;

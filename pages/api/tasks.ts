@@ -28,12 +28,6 @@ const typeDefs = gql`
         readTask(id: String!): Task!
         readTasks(team: String!): [Task]!
     }
-    # type List {
-    #     _id: ID
-    #     order: Int
-    #     team: String
-    #     title: String
-    # }
     type Task {
         _id: ID
         assignedTo: [User]
@@ -42,7 +36,6 @@ const typeDefs = gql`
         createdBy: User
         description: String
         dueDate: Float
-        # TODO: Change the return value of list to an object of type List.
         list: Int
         tags: [Tag]
         team: String
@@ -82,7 +75,7 @@ const resolvers = {
                 }
 
                 await db.collection('tasks').insertOne(task)
-                
+
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
                     return await db.collection('users').findOne({ _id: user })
                 }))
@@ -115,6 +108,17 @@ const resolvers = {
                 task.title = title
 
                 await db.collection('tasks').updateOne({ _id: ObjectID(id) }, { $set: task })
+
+                const log = {
+                    action: 'edited',
+                    date: new Date().valueOf(),
+                    item: id,
+                    team: team,
+                    type: 'task',
+                    user: createdBy
+                }
+
+                await db.collection('logs').insertOne(log)
 
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
                     return await db.collection('users').findOne({ _id: user })

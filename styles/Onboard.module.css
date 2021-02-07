@@ -1,0 +1,40 @@
+.onboard {
+}
+
+.onboard button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.4rem;
+  width: 100%;
+}
+
+.onboard div[role="picker"] {
+  border-radius: var(--main-border-radius);
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px,
+    rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+  max-width: 376px;
+  padding: 1.4rem;
+  text-align: center;
+  width: 100%;
+}
+
+.onboard div[role="picker"] > div {
+  padding: 0.6rem 0;
+}
+
+.onboard div[role="picker"] input {
+  border: 1px solid var(--main-border-color);
+  border-radius: var(--main-border-radius);
+  margin-top: 0.6rem;
+  padding: 0.6rem;
+  text-align: center;
+  width: 100%;
+}
+
+.onboard > span {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

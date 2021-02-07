@@ -17,7 +17,17 @@ const reducer = (state, action) => {
             return { 
                 ...state,
                 task: action.item
-            }    
+            } 
+        case 'UPDATE_TEAM':
+            return { 
+                ...state,
+                team: action.item
+            }
+        case 'UPDATE_USER':
+            return { 
+                ...state,
+                user: action.item
+            }        
         default:
             return state  
     }

@@ -1,0 +1,18 @@
+[{
+    "_id": "24e95d53-974f-4762-ab91-6d6fb5bee468",
+    "action": "created",
+    "date": 1612365885000,
+    "item": "601ad2c4b1db6c326ccff2af",
+    "team": "d86b76f5-b87e-4246-a9b0-cf5d2004e594",
+    "type": "task",
+    "user": "ed57dfaf-2c61-4aa8-8a7a-5873a3016467"
+}, {
+    "_id": "888a8ec7-0b5e-4be3-a663-f82054b77c0e",
+    "action": "updated",
+    "date": 1612365880000,
+    "item": "601ad2c4b1db6c326ccff2af",
+    "team": "d86b76f5-b87e-4246-a9b0-cf5d2004e594",
+    "type": "task",
+    "user": "f535d69d-d5b7-4941-92e0-0a2de3f7c92b"
+}]
+

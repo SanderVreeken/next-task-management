@@ -1,0 +1,23 @@
+.loginForm {
+  border-radius: var(--main-border-radius);
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px,
+    rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+  max-width: 376px;
+  padding: 1.4rem;
+  width: 100%;
+}
+
+.loginForm button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.loginForm input {
+  border: 1px solid var(--main-border-color);
+  border-radius: var(--main-border-radius);
+  margin-bottom: 0.3rem;
+  padding: 0.6rem;
+  width: 100%;
+}

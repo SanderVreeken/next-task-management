@@ -35,3 +35,17 @@ export const UPDATE_USER_QUERY = /* GraphQL */ `
         }
     }
 `
+
+export const VALIDATE_USER_QUERY = /* GraphQL */ `
+    query($email: String!, $password: String!) {
+        validateUser(email: $email, password: $password) {
+            _id
+            createdAt
+            email
+            firstName
+            lastName
+            team
+            token
+        }
+    }
+`

@@ -37,6 +37,7 @@ const typeDefs = gql`
     }
     type Query {
         readUsers(team: String!): [User]!
+        validateUser(email: String!, password: String!): User!
     }
     type User {
         _id: ID!
@@ -120,6 +121,38 @@ const resolvers = {
 
             const users = await db.collection('users').find({ team: team }).toArray()
             return users
+        },
+        async validateUser(_: any, { email, password }: Props) {
+            const { db } = await connectToDatabase()
+
+            const user = await db.collection('users').findOne({ email: email })
+
+            if (!user) {
+                throw new Error('User has not been found, please verify.')
+            }
+            const match = await bcrypt.compare(password, user.password)
+            if (!match) {
+                throw new Error('Password is not correct, please verify.')
+            }
+
+            const token = generateToken({
+                _id: user._id,
+                createdAt: user.createdAt,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                team: user.team,
+            })
+
+            return {
+                _id: user._id,
+                createdAt: user.createdAt,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                team: user.team,
+                token
+            }
         }
     }
 }

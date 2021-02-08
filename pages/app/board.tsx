@@ -1,5 +1,8 @@
+import jwtDecode from 'jwt-decode'
 import Head from 'next/head'
 import useSWR from 'swr'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -7,9 +10,11 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { listsFetcher } from '../../graphql/fetchers/lists'
 import { tagsFetcher } from '../../graphql/fetchers/tags'
 import { tasksFetcher } from '../../graphql/fetchers/tasks'
+import { teamFetcher } from '../../graphql/fetchers/teams'
 import { usersFetcher } from '../../graphql/fetchers/users'
 import { READ_LISTS_QUERY } from '../../graphql/queries/lists'
 import { READ_TAGS_QUERY } from '../../graphql/queries/tags'
+import { READ_TEAM_QUERY } from '../../graphql/queries/teams'
 import { READ_TASKS_QUERY } from '../../graphql/queries/tasks'
 import { READ_USERS_QUERY } from '../../graphql/queries/users'
 
@@ -29,13 +34,42 @@ import { useStateValue } from '../../components/StateProvider'
 import styles from '../../styles/Home.module.css'
 
 export default function Home() {
-  const [{ cover, team }] = useStateValue()
+  const router = useRouter()
+  const [{ cover, team }, dispatch] = useStateValue()
 
   const { data: lists } = useSWR([READ_LISTS_QUERY, team], listsFetcher)
   const { data: tags } = useSWR([READ_TAGS_QUERY, team], tagsFetcher)
+  const { data: teamData } = useSWR([READ_TEAM_QUERY, team], teamFetcher)
   const { data: tasks } = useSWR([READ_TASKS_QUERY, team], tasksFetcher, { refreshInterval: 1000 })
-  const { data: users } = useSWR([READ_USERS_QUERY, team], usersFetcher)
+  console.log(tasks)
+  const { data: users } = useSWR([READ_USERS_QUERY, team], usersFetcher) 
   
+  useEffect(() => {
+    if (localStorage.getItem('AUTHORIZATION_TOKEN')) {
+        const token: {
+            _id: string,
+            createdAt: number,
+            email: string,
+            exp: number,
+            firstName: string,
+            iat: number,
+            lastName: string,
+            team: string
+        } = jwtDecode(localStorage.getItem('AUTHORIZATION_TOKEN'))
+        if (token.exp * 1000 < new Date().valueOf()) {
+            localStorage.removeItem('AUTHORIZATION_TOKEN')
+            router.push('/login')
+        } else {
+          dispatch({
+              type: 'UPDATE_TEAM',
+              item: token.team
+          })
+        }
+    } else {
+        router.push('/login')
+    }
+  }, [])
+
   return (
     <div className={styles.home}>
       <Head>
@@ -59,8 +93,12 @@ export default function Home() {
       <Header backgroundColor='#f8f8f8' borderColor='#e6ecf0' justifyContent='space-between'>
         <>
           <section role='left'>
-            <h4 role='title'>Product Design Team</h4>
-            <Tag title='Sprint 8' />
+            {teamData && (
+              <span>
+                <h4 role='title'>{teamData.readTeam.title}</h4>
+                <Tag title={teamData.readTeam.subtitle} />
+              </span>
+            )}
           </section>
           <section role='right'>
             {users && <span role='avatars'>

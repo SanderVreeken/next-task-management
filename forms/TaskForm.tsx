@@ -61,6 +61,7 @@ export default function TaskForm({ lists, tags, users }: Props) {
             stateTask ? (
                 await updateTask(UPDATE_TASK_QUERY, { id: stateTask, assignedTo: fetchedTask.readTask.assignedTo.map(user => user._id), attachments: fetchedTask.readTask.attachments, createdAt: fetchedTask.readTask.createdAt, createdBy: fetchedTask.readTask.createdBy._id, description: fetchedTask.readTask.description, dueDate: fetchedTask.readTask.dueDate, flagged: fetchedTask.readTask.flagged, list: fetchedTask.readTask.list, tags: fetchedTask.readTask.tags.map(tag => tag._id), team: fetchedTask.readTask.team, title: fetchedTask.readTask.title })
             ) : (
+                // console.log({ assignedTo: newTask.assignedTo.map(user => user._id), description: newTask.description, dueDate: newTask.dueDate, list: newTask.list.order, tags: newTask.tags.map(tag => tag._id), team, title: newTask.title, user })
                 await createTask(CREATE_TASK_QUERY, { assignedTo: newTask.assignedTo.map(user => user._id), description: newTask.description, dueDate: newTask.dueDate, list: newTask.list.order, tags: newTask.tags.map(tag => tag._id), team, title: newTask.title, user })
             )
             dispatch({

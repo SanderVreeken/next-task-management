@@ -77,7 +77,7 @@ const resolvers = {
                 await db.collection('tasks').insertOne(task)
 
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
-                    return await db.collection('users').findOne({ _id: user })
+                    return await db.collection('users').findOne({ _id: ObjectID(user) })
                 }))
                 task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
                 task.tags = await Promise.all(task.tags.map(async tag => {
@@ -121,7 +121,7 @@ const resolvers = {
                 await db.collection('logs').insertOne(log)
 
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
-                    return await db.collection('users').findOne({ _id: user })
+                    return await db.collection('users').findOne({ _id: ObjectID(user) })
                 }))
                 task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
                 task.tags = await Promise.all(task.tags.map(async tag => {
@@ -139,9 +139,9 @@ const resolvers = {
             const { db } = await connectToDatabase()
 
             const task = await db.collection('tasks').findOne({ _id: ObjectID(id) })
-
+            
             task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
-                return await db.collection('users').findOne({ _id: user })
+                return await db.collection('users').findOne({ _id: ObjectID(user) })
             }))
             task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
             task.tags = await Promise.all(task.tags.map(async tag => {
@@ -157,7 +157,7 @@ const resolvers = {
 
             return tasks.map(async task => {
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
-                    return await db.collection('users').findOne({ _id: user })
+                    return await db.collection('users').findOne({ _id: ObjectID(user) })
                 }))
                 task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
                 task.tags = await Promise.all(task.tags.map(async tag => {

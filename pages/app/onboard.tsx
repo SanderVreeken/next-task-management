@@ -2,7 +2,9 @@ import jwtDecode from 'jwt-decode'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { createTeam } from '../../graphql/fetchers/teams'
 import { updateUser } from '../../graphql/fetchers/users'
+import { CREATE_TEAM_QUERY } from '../../graphql/queries/teams'
 import { UPDATE_USER_QUERY } from '../../graphql/queries/users'
 
 import Admin from '../../constants/admin'
@@ -36,7 +38,7 @@ export default function Onboard() {
                 localStorage.removeItem('AUTHORIZATION_TOKEN')
                 router.push('/login')
             } else {
-                console.log(token)
+                // console.log(token)
                 setUser(token)
             }
         } else {
@@ -52,8 +54,15 @@ export default function Onboard() {
                 item: data.updateUser.team
             })
             router.push('/app/board')
-        } else if (!inputs.existing && inputs.new) {
+        } else if (!inputs.existing && inputs.new) {  
+            const teamData = await createTeam(CREATE_TEAM_QUERY, { title: inputs.new, user: user._id })
+            await updateUser(UPDATE_USER_QUERY, { id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, team: teamData.createTeam._id })
 
+            dispatch({
+                type: 'UPDATE_TEAM',
+                item: teamData.createTeam._id
+            })
+            router.push('/app/board')
         } else {
             console.log('We got an error!')
         }
@@ -74,12 +83,12 @@ export default function Onboard() {
                     <h1>{`Hello, ${user.firstName}!`}</h1>
                     <div role='picker'>
                         <div>
-                            <h4>Want to join an existing group?</h4>
+                            <h4>Want to join an existing team?</h4>
                             <input onChange={(event) => updateState('existing', event.target.value)} placeholder='Enter group ID ...'></input>
                         </div>
                         <hr />
                         <div>
-                            <h4>Or create your own group?</h4>
+                            <h4>Or create your own team?</h4>
                             <input onChange={(event) => updateState('new', event.target.value)} placeholder='Enter new group title ...'></input>
                         </div>
                         <Button backgroundColor='#0d6efd' color='white' onClick={proceed} padding='0.6rem 1rem'>

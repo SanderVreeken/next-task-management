@@ -1,7 +1,7 @@
 :root {
   --main-border-color: #e6ecf0;
   --main-border-radius: 5px;
-  --min-header-height: 70px;
+  --min-header-height: 74px;
 }
 
 textarea,
@@ -75,6 +75,7 @@ button {
   cursor: pointer;
   display: flex;
   text-align: center;
+  padding: 0.4rem 0.6rem;
 }
 
 a {

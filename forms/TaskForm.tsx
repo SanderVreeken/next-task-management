@@ -69,7 +69,7 @@ export default function TaskForm({ lists, tags, users }: Props) {
                 item: false
             })
         } catch(error) {
-            console.log(error.response.errors)
+            console.log(error)
         }
     }
 

@@ -41,7 +41,6 @@ export default function Home() {
   const { data: tags } = useSWR([READ_TAGS_QUERY, team], tagsFetcher)
   const { data: teamData } = useSWR([READ_TEAM_QUERY, team], teamFetcher)
   const { data: tasks } = useSWR([READ_TASKS_QUERY, team], tasksFetcher, { refreshInterval: 1000 })
-  console.log(tasks)
   const { data: users } = useSWR([READ_USERS_QUERY, team], usersFetcher) 
   
   useEffect(() => {
@@ -63,6 +62,10 @@ export default function Home() {
           dispatch({
               type: 'UPDATE_TEAM',
               item: token.team
+          })
+          dispatch({
+            type: 'UPDATE_USER',
+            item: token._id
           })
         }
     } else {

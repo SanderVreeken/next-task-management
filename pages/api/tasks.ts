@@ -11,6 +11,7 @@ type Props = {
     createdBy: string
     description: string
     dueDate: number
+    editor: string
     flagged: boolean
     list: number
     tags: string[]
@@ -22,7 +23,7 @@ type Props = {
 const typeDefs = gql`
     type Mutation {
         createTask(assignedTo: [String], description: String, dueDate: Float!, list: Int!, tags: [String], team: String!, title: String!, user: String!): Task!
-        updateTask(id: String!, assignedTo: [String], attachments: Int, createdAt: Float!, createdBy: String!, description: String, dueDate: Float!, flagged: Boolean!, list: Int!, tags: [String], team: String!, title: String!): Task!
+        updateTask(id: String!, assignedTo: [String], attachments: Int, createdAt: Float!, createdBy: String!, description: String, dueDate: Float!, editor: String!, flagged: Boolean!, list: Int!, tags: [String], team: String!, title: String!): Task!
     }
     type Query {
         readTask(id: String!): Task!
@@ -89,7 +90,7 @@ const resolvers = {
                 throw new Error(error)
             }
         },
-        async updateTask(_: any, { id, assignedTo, attachments, createdAt, createdBy, description, dueDate, flagged, list, tags, team, title }: Props) {
+        async updateTask(_: any, { id, assignedTo, attachments, createdAt, createdBy, description, dueDate, editor, flagged, list, tags, team, title }: Props) {
             const { db } = await connectToDatabase()
             
             try { 
@@ -115,7 +116,7 @@ const resolvers = {
                     item: id,
                     team: team,
                     type: 'task',
-                    user: createdBy
+                    user: editor
                 }
 
                 await db.collection('logs').insertOne(log)
@@ -123,7 +124,7 @@ const resolvers = {
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
                     return await db.collection('users').findOne({ _id: ObjectID(user) })
                 }))
-                task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
+                task.createdBy = await db.collection('users').findOne({ _id: ObjectID(task.createdBy) })
                 task.tags = await Promise.all(task.tags.map(async tag => {
                     return await db.collection('tags').findOne({ _id: tag })
                 }))
@@ -143,7 +144,7 @@ const resolvers = {
             task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
                 return await db.collection('users').findOne({ _id: ObjectID(user) })
             }))
-            task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
+            task.createdBy = await db.collection('users').findOne({ _id: ObjectID(task.createdBy) })
             task.tags = await Promise.all(task.tags.map(async tag => {
                 return await db.collection('tags').findOne({ _id: tag })
             }))
@@ -159,7 +160,7 @@ const resolvers = {
                 task.assignedTo = await Promise.all(task.assignedTo.map(async user => {
                     return await db.collection('users').findOne({ _id: ObjectID(user) })
                 }))
-                task.createdBy = await db.collection('users').findOne({ _id: task.createdBy })
+                task.createdBy = await db.collection('users').findOne({ _id: ObjectID(task.createdBy) })
                 task.tags = await Promise.all(task.tags.map(async tag => {
                     return await db.collection('tags').findOne({ _id: tag })
                 }))

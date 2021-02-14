@@ -49,19 +49,14 @@ export default function Onboard() {
     const proceed = async () => {
         if (inputs.existing && !inputs.new) {
             const data = await updateUser(UPDATE_USER_QUERY, { id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, team: inputs.existing })
-            dispatch({
-                type: 'UPDATE_TEAM',
-                item: data.updateUser.team
-            })
+
+            localStorage.setItem('AUTHORIZATION_TOKEN', data.updateUser.token) 
             router.push('/app/board')
         } else if (!inputs.existing && inputs.new) {  
             const teamData = await createTeam(CREATE_TEAM_QUERY, { title: inputs.new, user: user._id })
-            await updateUser(UPDATE_USER_QUERY, { id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, team: teamData.createTeam._id })
+            const data = await updateUser(UPDATE_USER_QUERY, { id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, team: teamData.createTeam._id })
 
-            dispatch({
-                type: 'UPDATE_TEAM',
-                item: teamData.createTeam._id
-            })
+            localStorage.setItem('AUTHORIZATION_TOKEN', data.updateUser.token) 
             router.push('/app/board')
         } else {
             console.log('We got an error!')

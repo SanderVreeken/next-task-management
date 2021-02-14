@@ -19,7 +19,7 @@ export default function Log({ action, date, title, user }: Props) {
                 <Avatar type='medium' user={user} />
                 <p role='text'>{`${user.firstName} ${action} ${title}`}</p>
             </span>
-            <h5 role='date'>{moment(date).startOf('hour').fromNow()}</h5>
+            <h5 role='date'>{moment(date).startOf('minutes').fromNow()}</h5>
         </span>
     )
 }

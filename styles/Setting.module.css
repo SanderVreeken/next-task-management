@@ -1,0 +1,24 @@
+.setting {
+  border: 1px solid var(--main-border-color);
+  border-radius: var(--main-border-radius);
+  height: fit-content;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.setting > div[role="bottom"] {
+  align-items: center;
+  background-color: #fafafa;
+  border-top: 1px solid var(--main-border-color);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 1.4rem;
+}
+
+.setting > div[role="top"] {
+  padding: 1.4rem;
+}
+
+.setting > div[role="top"] p {
+  margin: 1rem 0;
+}

@@ -5,31 +5,31 @@ export const READ_LOGS_QUERY = /* GraphQL */ `
             action
             date
             item {
-                # _id
-                # assignedTo {
-                #     _id
-                #     firstName
-                #     lastName
-                #     team
-                # }   
-                # attachments
-                # createdAt
-                # createdBy {
-                #     _id
-                #     firstName
-                #     lastName
-                #     team
-                # }
-                # description
-                # dueDate
-                # flagged
-                # list
-                # tags {
-                #     _id
-                #     team
-                #     title
-                # }
-                # team
+                _id
+                assignedTo {
+                    _id
+                    firstName
+                    lastName
+                    team
+                }   
+                attachments
+                createdAt
+                createdBy {
+                    _id
+                    firstName
+                    lastName
+                    team
+                }
+                description
+                dueDate
+                flagged
+                list
+                tags {
+                    _id
+                    team
+                    title
+                }
+                team
                 title
             }
             team

@@ -32,6 +32,7 @@ export const UPDATE_USER_QUERY = /* GraphQL */ `
             firstName
             lastName
             team
+            token
         }
     }
 `

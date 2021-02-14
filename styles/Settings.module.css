@@ -1,0 +1,49 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.settings div[role="canvas"] {
+  width: 1142px;
+}
+
+.settings div[role="logs"] {
+  height: 100%;
+  width: 35%;
+}
+
+.settings div[role="overview"] {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.settings div[role="settings"] {
+  height: 100%;
+  padding: 0.6rem 3rem;
+  width: 65%;
+}
+
+.settings div[role="settings"] h3 {
+  font-weight: 400;
+}
+
+.settings div[role="settings"] input {
+  border: 1px solid var(--main-border-color);
+  border-radius: var(--main-border-radius);
+  padding: 0.5rem;
+  width: 46%;
+}
+
+.settings main header {
+  padding: 1rem 0 1rem 3rem;
+}
+
+.settings main {
+  display: flex;
+  height: calc(100% - (var(--min-header-height) * 2));
+  justify-content: center;
+  min-width: 864px;
+}

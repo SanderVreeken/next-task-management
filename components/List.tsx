@@ -10,6 +10,7 @@ import ItemTypes from '../constants/ItemTypes'
 import Button from './Button'
 import Card from './Card'
 import Header from './Header'
+import { useStateValue } from './StateProvider'
 import styles from '../styles/List.module.css'
 
 type Props = {
@@ -19,11 +20,12 @@ type Props = {
 }
 
 export default function List({ list, tasks, title }) {
+    const [{ user }] = useStateValue()
     const [{ isOver, item }, drop] = useDrop({
         accept: ItemTypes.CARD,
         drop: async () => {
             try {
-                await updateTask(UPDATE_TASK_QUERY, { id: item.task.id, assignedTo: item.task.assignedTo.map(user => user._id), attachments: item.task.attachments, createdAt: item.task.createdAt, createdBy: item.task.createdBy._id, description: item.task.description, dueDate: item.task.dueDate, flagged: item.task.flagged, list: list, tags: item.task.tags.map(tag => tag._id), team: item.task.team, title: item.task.title })
+                await updateTask(UPDATE_TASK_QUERY, { id: item.task.id, assignedTo: item.task.assignedTo.map(user => user._id), attachments: item.task.attachments, createdAt: item.task.createdAt, createdBy: item.task.createdBy._id, description: item.task.description, dueDate: item.task.dueDate, editor: user, flagged: item.task.flagged, list: list, tags: item.task.tags.map(tag => tag._id), team: item.task.team, title: item.task.title })
             } catch(error) {
                 console.log(error)
             }

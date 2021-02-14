@@ -40,9 +40,11 @@ const typeDefs = gql`
         title: String
     }
     type User {
-        _id: ID
-        firstName: String
-        lastName: String
+        _id: ID!
+        createdAt: Float
+        email: String
+        firstName: String!
+        lastName: String!
         team: String
     }
 `
@@ -59,9 +61,10 @@ const resolvers = {
                 log.item.assignedTo = await Promise.all(log.item.assignedTo.map(async user => {
                     return await db.collection('users').findOne({ _id: ObjectID(user) })
                 }))
-                log.item.createdBy = await db.collection('users').findOne({ _id: log.item.createdBy })
+
+                log.item.createdBy = await db.collection('users').findOne({ _id: ObjectID(log.item.createdBy) })
                 log.item.tags = await Promise.all(log.item.tags.map(async tag => {
-                    return await db.collection('tags').findOne({ _id: ObjectID(tag) })
+                    return await db.collection('tags').findOne({ _id: tag })
                 }))
                 log.user = await db.collection('users').findOne({ _id: ObjectID(log.user) })
 

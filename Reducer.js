@@ -1,8 +1,8 @@
 export const initialState = {
     cover: false,
     task: null,
-    team: 'TEAM',
-    user: 'f8427b0e-78d7-4d4d-819a-9dd0d2ae19f2'
+    team: '',
+    user: ''
 }
 
 const reducer = (state, action) => {

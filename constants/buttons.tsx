@@ -5,14 +5,6 @@ export const HeaderButtons = [{
     icon: <AiFillAppstore />,
     title: 'Board'
 }, {
-    href: '/app/feed',
-    icon: <AiOutlineDashboard />,
-    title: 'Feed'
-}, {
-    href: '/app/report',
-    icon: <AiOutlineDotChart />,
-    title: 'Report'
-}, {
     href: '/app/settings',
     icon: <AiOutlineControl />,
     title: 'Settings'

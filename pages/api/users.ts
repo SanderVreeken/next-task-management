@@ -102,13 +102,23 @@ const resolvers = {
 
                 await db.collection('users').updateOne({ _id: ObjectID(id) }, { $set: user })
 
+                const token = generateToken({
+                    _id: user._id,
+                    createdAt: user.createdAt,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    team: user.team,
+                })
+
                 return {
                     _id: user._id,
                     createdAt: user.createdAt,
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    team: user.team
+                    team: user.team,
+                    token
                 }
             } catch(error) {
                 throw new Error(error)
